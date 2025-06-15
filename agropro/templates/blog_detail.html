@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AgroPro</title>
+  <link rel="icon" href=" {% static 'images/logo.png' %}" type="image/icon type">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    body {
+      {% comment %} https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D {% endcomment %}
+      background: url('https://images.unsplash.com/photo-1590855127509-ed4e65f081b4?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      {% comment %} background: #f4f4f4; {% endcomment %}
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: #333 !important;
+    }
+
+    .nav-link:hover {
+      color: #56021F !important;
+    }
+
+    .blog-card {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      background: white;
+      margin-bottom: 30px;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .blog-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .blog-content {
+      padding: 20px;
+    }
+
+    .blog-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2f2f2f;
+      transition: color 0.3s ease;
+    }
+
+    .blog-title:hover {
+      color: #830230;
+    }
+
+    .blog-description {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .read-more {
+      text-decoration: none;
+      font-weight: bold;
+      color: #56021F;
+      transition: color 0.3s ease;
+    }
+
+    .read-more:hover {
+      color: #830230;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    footer {
+      background-color: #fff;
+      padding: 15px 0;
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+      border-top: 1px solid #eaeaea;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-md navbar-dark sticky-top">
+    <a href="/" class="navbar-brand">
+        <img src= " {% static 'images/logo1.png' %}" height="28" alt="">
+    </a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav">
+        <a href="/" class="nav-item nav-link active" style="color:black">Home</a>
+        {% if username is not None %}
+            {% if utype == "farmer" %}
+            <a href="{%url 'predict_soil' %}" class="nav-item nav-link active" style="color:black">Soil Type Identification</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+              
+            {% endif %}
+          {% endif %}
+          {% if username is not None %}
+            {% if utype == "farmer" %}
+             <a href="{%url 'prediction'%}" class="nav-item nav-link" style="color:black">Crop Recommendation</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+              <a href="{% url 'market'%}" class="nav-item nav-link" style="color:black">Farmer's Market</a>
+            {% endif %}
+          {% endif %}
+          {% if username is not None %}
+            {% if utype == "farmer" %}
+            <a href="{% url 'blog' %}" class="nav-item nav-link" style="color:black">Blogs</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+            <a href="{% url 'blogs' %}" class="nav-item nav-link" style="color:black">Blogs</a>
+            {% endif %}
+          {% endif %}
+          {% comment %} <a href="/farmer/blog" class="nav-item nav-link active" style="color:black">Blogs</a> {% endcomment %}
+      </div>
+  <div class="navbar-nav ml-auto">
+    <div class="nav-item dropdown" style="color:black">
+      <a href="#" style="color:black" class="nav-link dropdown-toggle user-action" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src="https://i.pinimg.com/736x/5f/fe/c0/5ffec07ae6b545b6a22ae2a72801756e.jpg" class="avatar" alt="Avatar" style="height: 30px;width: 30px;border-radius:50%;">
+        {{ username }} <b class="caret"></b>
+      </a>
+      
+      <div class="dropdown-menu">
+        {% if username is not None %}
+            {% if utype == "farmer" %}
+            <a href="{% url 'profile' %}" class="dropdown-item"><i class="bi bi-person-square"></i> Profile</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+            <a href="{% url 'profiles' %}" class="dropdown-item"><i class="fa fa-person-square"></i> Profile</a>
+            {% endif %}
+          {% endif %}
+        {% comment %} <a href="/farmer/profile" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a> {% endcomment %}
+        <a href="/{{ utype }}/notifications" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a>
+          {% comment %} {% endif %} {% endcomment %}
+        {% comment %} <a href="/farmer/notifications" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a> {% endcomment %}
+        <div class="dropdown-divider"></div>
+        <form method="post" action="/logout">
+          {% csrf_token %}
+          <button class="dropdown-item">
+            <i class="fa fa-sign-out"></i> Logout
+          </button>
+        </form> 
+      </div>
+    </div>
+  </div>
+    
+
+<style>
+  .avatar {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+  }
+  .dropdown-menu {
+    right: 0 !important; 
+    left: auto !important; 
+    max-width: 250px;
+    overflow: visible;
+    position: fixed !important;
+    right: 10px; 
+    top: 40px; 
+    z-index: 1050; 
+  }
+  .navbar, .container {
+    overflow: visible !important;
+  }
+  
+  
+</style>
+
+</nav>
+  <!-- BLOG SECTION -->
+  <div class="container">
+    <h2 class="section-title">Straight From The Farms!</h2>
+    <div class="row">
+
+      <!-- Blog 1 -->
+      <div class="col-md-4">
+        <div class="blog-card">
+          <img src="https://images.unsplash.com/photo-1721424759830-e4b892acf1d7" class="blog-img" alt="Farming">
+          <div class="blog-content">
+            <h5 class="blog-title">Sustainable Farming Tips</h5>
+            <p class="blog-description">Eco-friendly techniques to boost productivity while preserving the environment.</p>
+            <a href="#" class="read-more">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog 2 -->
+      <div class="col-md-4">
+        <div class="blog-card">
+          <img src="https://plus.unsplash.com/premium_photo-1663089572474-6e2dc35d0ede" class="blog-img" alt="Soil">
+          <div class="blog-content">
+            <h5 class="blog-title">Understanding Soil Health</h5>
+            <p class="blog-description">Learn to evaluate and improve soil quality for maximum crop yield.</p>
+            <a href="#" class="read-more">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog 3 -->
+      <div class="col-md-4">
+        <div class="blog-card">
+          <img src="https://plus.unsplash.com/premium_photo-1678378933600-18b44268b531" class="blog-img" alt="Crops">
+          <div class="blog-content">
+            <h5 class="blog-title">Top 5 Crops for Each Season</h5>
+            <p class="blog-description">Seasonal crop guide to ensure great returns and healthy soil.</p>
+            <a href="#" class="read-more">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {% comment %} <!-- FOOTER -->
+  <footer>
+    &copy; 2025 AgroPro. All rights reserved.
+  </footer> {% endcomment %}
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

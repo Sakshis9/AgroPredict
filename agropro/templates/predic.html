@@ -1,0 +1,318 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>AgroPro</title>
+  <link rel="icon" href="{% static 'images/logo.png' %}" type="image/icon type">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      background: url("https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?q=80&w=3542&auto=format&fit=crop") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .custom-btn {
+      border-radius: 8px !important;
+      font-weight: bold !important;
+      font-size: 1rem !important;
+      padding: 10px 24px !important;
+      color: white !important;
+      background: #56021F !important;
+      border: none !important;
+      box-shadow: 0 4px 12px rgba(86, 2, 31, 0.3) !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .custom-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(86, 2, 31, 0.4);
+    }
+
+    .crop-card {
+      max-width: 22rem;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #e0f2e9, #fdf6ec);
+      border: 2px solid rgba(200, 200, 200, 0.5);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #333;
+      text-transform: capitalize;
+    }
+
+    .styled-hr {
+      border-top: 2px dashed rgba(100, 100, 100, 0.4);
+    }
+
+    #outputDiv {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding-top: 2rem;
+    }
+
+    .avatar.img-thumbnail {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body id="BodyMain">
+
+  <nav class="navbar navbar-expand-md navbar-dark sticky-top">
+    <a href="/" class="navbar-brand">
+        <img src="{% static 'images/logo1.png' %}" height="28" alt="">
+    </a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav">
+        <a href="/" class="nav-item nav-link active" style="color:black">Home</a>
+        {% if username is not None %}
+            {% if utype == "farmer" %}
+            <a href="{%url 'predict_soil' %}" class="nav-item nav-link active" style="color:black">Soil Type Identification</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+              
+            {% endif %}
+          {% endif %}
+          {% if username is not None %}
+            {% if utype == "farmer" %}
+            <a href="{%url 'prediction'%}" class="nav-item nav-link" style="color:black">Crop Recommendation</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+              <a href="{% url 'market'%}" class="nav-item nav-link" style="color:black">Farmer's Market</a>
+            {% endif %}
+          {% endif %}
+          {% if username is not None %}
+            {% if utype == "farmer" %}
+            <a href="{% url 'blog' %}" class="nav-item nav-link" style="color:black">Blogs</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+            <a href="{% url 'blogs' %}" class="nav-item nav-link" style="color:black">Blogs</a>
+            {% endif %}
+          {% endif %}
+          {% comment %} <a href="/farmer/blog" class="nav-item nav-link active" style="color:black">Blogs</a> {% endcomment %}
+      </div>
+  <div class="navbar-nav ml-auto">
+    <div class="nav-item dropdown" style="color:black">
+      <a href="#" style="color:black" class="nav-link dropdown-toggle user-action" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src="https://i.pinimg.com/736x/5f/fe/c0/5ffec07ae6b545b6a22ae2a72801756e.jpg" class="avatar" alt="Avatar" style="height: 30px;width: 30px;border-radius:50%;">
+        {{ username }} <b class="caret"></b>
+      </a>
+      
+      <div class="dropdown-menu">
+        {% if username is not None %}
+            {% if utype == "farmer" %}
+            <a href="{% url 'profile' %}" class="dropdown-item"><i class="bi bi-person-square"></i> Profile</a>
+            {% endif %}
+            {% if utype == 'wholesaler' %}
+            <a href="{% url 'profiles' %}" class="dropdown-item"><i class="bi bi-person-square"></i> Profile</a>
+            {% endif %}
+          {% endif %}
+        {% comment %} <a href="/farmer/profile" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a> {% endcomment %}
+        <a href="/{{ utype }}/notifications" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a>
+        {% comment %} <a href="/farmer/notifications" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a> {% endcomment %}
+        <div class="dropdown-divider"></div>
+        <form method="post" action="/logout">
+          {% csrf_token %}
+          <button class="dropdown-item">
+            <i class="fa fa-sign-out"></i> Logout
+          </button>
+        </form> 
+      </div>
+    </div>
+  </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 p-3" style="background-color: rgba(0,0,0,0.2); min-height: 100vh;">
+        <h2 class="text-center text-white">Prediction</h2>
+        <hr class="bg-white">
+        <form>
+          <div class="form-group">
+            <select class="form-control" id="season">
+              <option disabled selected>Select Season</option>
+              <option>Kharif</option>
+              <option>Rabi</option>
+              <option>Whole Year</option>
+            </select>
+          </div>
+          <img src="https://plus.unsplash.com/premium_photo-1677093905912-a653c6301260?w=900" class="img-thumbnail d-block mx-auto" alt="avatar" style="width: 100%; max-width: 300px;" id="changeImage">
+          <h6 class="text-center text-white mt-2">Upload Soil Image</h6>
+          <input type="file" class="form-control-file text-white" id="soilImage">
+          <br>
+          <button type="button" class="custom-btn d-block mx-auto" onclick="checkImage()">Submit</button>
+        </form>
+      </div>
+
+      <!-- Output Content -->
+      <div class="col-md-9">
+        <div id="outputDiv"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+  <script>
+    let newFormData = new FormData();
+    const fileField = document.querySelector('input[type="file"]');
+    let mainOutput = [];
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          $('#changeImage').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $("#soilImage").change(function () {
+        const file = this.files[0];
+        const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      
+        if (!file) return;
+      
+        if (!validTypes.includes(file.type)) {
+          alert("Unsupported file type. Please upload a JPG or PNG image.");
+          this.value = ''; // Reset file input
+          $('#changeImage').attr('src', 'https://plus.unsplash.com/premium_photo-1677093905912-a653c6301260?w=900'); // reset preview
+          return;
+        }
+      
+        readURL(this);
+      });
+      
+
+    function setCropPredict(index) {
+      const cropInfo = {
+        name: mainOutput[index]['crop'],
+        quantity: parseFloat(mainOutput[index]['production'].toFixed(2)),
+        price: parseFloat((mainOutput[index]['price'] / mainOutput[index]['production']).toFixed(2)),
+        tsp: 750000
+      };
+
+      const form = document.createElement("form");
+      form.method = "post";
+      form.action = "/farmer/setCrop";
+
+      const csrf = document.createElement("input");
+      csrf.type = "hidden";
+      csrf.name = "csrfmiddlewaretoken";
+      csrf.value = '{{ csrf_token }}';
+
+      const name = document.createElement("input");
+      name.name = "name";
+      name.value = cropInfo.name;
+
+      const quantity = document.createElement("input");
+      quantity.name = "quantity";
+      quantity.value = cropInfo.quantity;
+
+      const price = document.createElement("input");
+      price.name = "price";
+      price.value = cropInfo.price;
+
+      const tsp = document.createElement("input");
+      tsp.name = "tsp";
+      tsp.value = cropInfo.tsp;
+
+      [csrf, name, quantity, price, tsp].forEach(el => {
+        el.type = "hidden";
+        form.appendChild(el);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+
+    function checkImage() {
+        const season = document.getElementById('season').value;
+        const file = fileField.files[0];
+      
+        if (!season || season === "Select Season") {
+          alert("Please select a season.");
+          return;
+        }
+      
+        if (!file) {
+          alert("Please upload a soil image before submitting.");
+          return;
+        }
+      
+        newFormData = new FormData();
+        newFormData.append('season', season);
+        newFormData.append('file', file);
+      
+        fetch('/farmer/prediction', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: newFormData
+        })
+        .then(response => response.json())
+        .then(result => {
+          mainOutput = result.result;
+          const outputDiv = document.getElementById('outputDiv');
+          outputDiv.innerHTML = '';
+      
+          const cropEmojis = {
+            wheat: '🌾', rice: '🌱', corn: '🌽', soybeans: '🌿', potatoes: '🥔',
+            tomatoes: '🍅', apples: '🍏', oranges: '🍊', grapes: '🍇', carrots: '🥕'
+          };
+      
+          mainOutput.forEach((crop, i) => {
+            const emoji = cropEmojis[crop.crop.toLowerCase()] || '🌱';
+            const whyText = crop.why ? `<p class="card-text"><b>Why this crop?</b> 🌟 ${crop.why}</p>` : '';
+            
+            outputDiv.innerHTML += `
+              <div class="crop-card" data-index="${i}">
+                <h5 class="card-title">${emoji} ${crop.crop}</h5>
+                <hr class="styled-hr">
+                <p class="card-text"><b>Production:</b> 🚜 ${crop.production.toFixed(2)}</p>
+                <p class="card-text"><b>Price:</b> 💰 Rs.${crop.price.toFixed(2)}</p>
+                <p class="card-text"><b>Last Updated:</b>📅 May 31, 2025</p>
+                ${whyText}
+                <div class="card-footer">
+                  <button class="custom-btn add-crop-btn">🌱 Add Crop</button>
+                </div>
+              </div>`;
+          });
+          
+      
+          outputDiv.querySelectorAll(".add-crop-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+              const card = e.target.closest(".crop-card");
+              const index = card.getAttribute("data-index");
+              setCropPredict(index);
+            });
+          });
+        });
+      }
+      
+  </script>
+</body>
+</html>

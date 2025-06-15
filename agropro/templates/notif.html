@@ -1,0 +1,435 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AgroPro</title>
+    <link rel="icon" href=" {% static 'images/logo.png' %}" type="image/icon type">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body{
+            background: url("https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") no-repeat center center fixed;
+    background-size: cover;
+        }
+        /* Overall container styling */
+        .container {
+            padding: 0 15px;
+        }
+    
+        /* Grid layout for notifications */
+        .notification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+    
+        /* Card styling */
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Image styling */
+        .card-image img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+    
+        /* Card action link styling */
+        .card-action {
+            align-self: flex-start;
+            margin-top: 10px;
+            color: #25D366; /* WhatsApp color */
+            font-size: 1.5rem;
+        }
+    
+        .card-action:hover {
+            color: #128C7E;
+        }
+    
+        /* Heading and text styling */
+        .card-heading {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+    
+        .card-text {
+            font-size: 1rem;
+            color: #555;
+            margin: 5px 0;
+        }
+    
+        /* Button styling */
+        .card-button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+    
+        .card-button.accept {
+            background-color: #4CAF50;
+        }
+    
+        .card-button.accept:hover {
+            background-color: #45a049;
+        }
+    
+        .card-button.pending {
+            background-color: #FF9800;
+        }
+    
+        .card-button.pending:hover {
+            background-color: #f57c00;
+        }
+    
+        .card-button.accepted {
+            background-color: #2196F3;
+        }
+    
+        .card-button.accepted:hover {
+            background-color: #1976D2;
+        }
+    
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .notification-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+      .card-sl {
+          width: 230px;
+          height:300px;
+          margin-bottom: 50px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      .card-image img {
+          display: block;
+          height: 140px;
+          width: 230px;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius:8px;
+      }
+
+      .card-action {
+          position: relative;
+          float: right;
+          margin-top: -25px;
+          margin-right: 20px;
+          z-index: 2;
+          color: #6D2932;
+          background: #fff;
+          border-radius: 100%;
+          padding: 15px;
+          font-size: 20px;
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      .card-action:hover {
+          color: #fff;
+          background: #6D2932;
+          -webkit-animation: pulse 1.5s infinite;
+      }
+
+      .card-heading {
+          font-size: 18px;
+          font-weight: bold;
+          background: #fff;
+          padding: 10px 15px;
+      }
+
+      .card-text {
+          padding: 10px 15px;
+          background: #fff;
+          font-size: 14px;
+          color: #636262;
+      }
+
+      .card-button {
+          display: flex;
+          justify-content: center;
+          padding: 10px 0;
+          width: 100%;
+          background-color: #944E63;
+          color: #fff;
+          border-radius: 0 0 8px 8px;
+          border: 2px solid blue;
+      }
+
+      .card-button:hover {
+          text-decoration: none;
+          background-color: #6D2932;
+          color: #fff;
+
+      }
+
+
+      @-webkit-keyframes pulse {
+          0% {
+              -moz-transform: scale(0.9);
+              -ms-transform: scale(0.9);
+              -webkit-transform: scale(0.9);
+              transform: scale(0.9);
+          }
+
+          70% {
+              -moz-transform: scale(1);
+              -ms-transform: scale(1);
+              -webkit-transform: scale(1);
+              transform: scale(1);
+              box-shadow: 0 0 0 50px rgba(90, 153, 212, 0);
+          }
+
+          100% {
+              -moz-transform: scale(0.9);
+              -ms-transform: scale(0.9);
+              -webkit-transform: scale(0.9);
+              transform: scale(0.9);
+              box-shadow: 0 0 0 0 rgba(90, 153, 212, 0);
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark sticky-top">
+        <a href="/" class="navbar-brand">
+            <img src= " {% static 'images/logo1.png' %}" height="28" alt="">
+        </a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav">
+            <a href="/" class="nav-item nav-link active" style="color:black">Home</a>
+            {% if username is not None %}
+                {% if utype == "farmer" %}
+                <a href="{%url 'predict_soil' %}" class="nav-item nav-link active" style="color:black">Soil Type Identification</a>
+                {% endif %}
+                {% if utype == 'wholesaler' %}
+                  
+                {% endif %}
+              {% endif %}
+              {% if username is not None %}
+                {% if utype == "farmer" %}
+                <a href="{%url 'prediction'%}" class="nav-item nav-link" style="color:black">Crop Recommendation</a>
+                {% endif %}
+                {% if utype == 'wholesaler' %}
+                  <a href="{% url 'market'%}" class="nav-item nav-link" style="color:black">Farmer's Market</a>
+                {% endif %}
+              {% endif %}
+              {% if username is not None %}
+                {% if utype == "farmer" %}
+                <a href="{% url 'blog' %}" class="nav-item nav-link" style="color:black">Blogs</a>
+                {% endif %}
+                {% if utype == 'wholesaler' %}
+                <a href="{% url 'blogs' %}" class="nav-item nav-link" style="color:black">Blogs</a>
+                {% endif %}
+              {% endif %}
+              {% comment %} <a href="/farmer/blog" class="nav-item nav-link active" style="color:black">Blogs</a> {% endcomment %}
+          </div>
+      <div class="navbar-nav ml-auto">
+        <div class="nav-item dropdown" style="color:black">
+          <a href="#" style="color:black" class="nav-link dropdown-toggle user-action" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://i.pinimg.com/736x/5f/fe/c0/5ffec07ae6b545b6a22ae2a72801756e.jpg" class="avatar" alt="Avatar" style="height: 30px;width: 30px;border-radius:50%;">
+            {{ username }} <b class="caret"></b>
+          </a>
+          
+          <div class="dropdown-menu">
+            {% if username is not None %}
+                {% if utype == "farmer" %}
+                <a href="{% url 'profile' %}" class="dropdown-item"><i class="bi bi-person-square"></i> Profile</a>
+                {% endif %}
+                {% if utype == 'wholesaler' %}
+                <a href="{% url 'profiles' %}" class="dropdown-item"><i class="bi bi-person-square"></i> Profile</a>
+                {% endif %}
+              {% endif %}
+            {% comment %} <a href="/farmer/profile" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a> {% endcomment %}
+            <a href="/{{ utype }}/notifications" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a>
+            {% comment %} <a href="/farmer/notifications" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a> {% endcomment %}
+            <div class="dropdown-divider"></div>
+        <form method="post" action="/logout">
+          {% csrf_token %}
+          <button class="dropdown-item">
+            <i class="fa fa-sign-out"></i> Logout
+          </button>
+        </form> 
+      </div>
+        </div>
+      </div>
+        
+    
+    <style>
+      .avatar {
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+      }
+      .dropdown-menu {
+        right: 0 !important; 
+        left: auto !important; 
+        max-width: 250px;
+        overflow: visible;
+        position: fixed !important;
+        right: 10px; 
+        top: 40px; 
+        z-index: 1050; 
+      }
+      .navbar, .container {
+        overflow: visible !important;
+      }
+      
+      
+    </style>
+    
+    </nav>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="dropdown">
+          <br><button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Order by</button>
+          <form method="get" action="/{{ utype }}/notifications/" >
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <input type='submit' class="dropdown-item" name='orderby' value="Pending">
+            <input type='submit' class="dropdown-item" name='orderby' value="Accepted">
+          </div>
+        </form>
+        </div>
+      </div>
+      <br>
+      {% if notif|length == 0 %}
+        <h3>No Notifications</h3>
+      {% else %}
+      {% comment %} <div class="container" style="margin-top:20px;" >
+        <div style=" display: grid; grid-template-columns: repeat(4, 2fr);">
+          {% for  i in notif %}
+                  <div class="card-sl">
+                      <div class="card-image">
+                          <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                      </div>
+                      
+                        <!-- <a href="https://wa.me/{{ i.4 }}" >
+                          <img src= " {% static 'images/wicon.png' %} " height="18">
+                        </a> -->
+                      {% if i.3 %}
+                        <a class="card-action" href="https://wa.me/{{ i.4 }}"><i class="fa fa-whatsapp"></i></a>
+                    
+                        
+                      {% endif %}
+                      <div class="card-heading">
+                          {{i.1}}
+                      </div>
+                      <div class="card-text">
+                          <strong>Crop:</strong> {{i.0}}
+                      </div>
+                      <div class="card-text">
+                           <strong>Price:</strong> {{i.2}}
+                      </div>
+                      <!-- <div class="card-text">
+                         
+                      </div> -->
+                     
+                      {% if not i.3 %}
+                          {% if utype == "farmer" %}
+                            <form action="/farmer/notifications/" method="post">
+                              {% csrf_token %}
+                              <input type="hidden" name="id" value="{{ i|last }}">
+                            <td><button type="submit" class="card-button">Accept</button></td>
+                            </form>
+
+                          {% else %}
+                          <a  class="card-button">Pending</a>
+                          {% endif %}
+
+                      {% else %}
+                        <a  class="card-button">Accepted</a>
+                      {% endif %}
+                     
+                  </div>
+          {% endfor %}
+                  
+          
+        </div>
+        </div>
+       {% endcomment %}
+       <div class="container" style="margin-top: 30px;">
+        <div class="notification-grid">
+            {% for i in notif %}
+                <div class="card">
+                    <div class="card-image">
+                        {%if utype == "farmer"%}
+                        <img src="https://static.vecteezy.com/system/resources/previews/032/133/198/non_2x/wholesale-icon-vector.jpg" alt="User Avatar">
+                        {% endif %}
+                        {% if utype == "wholesaler"%}
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIglgvl_ZHWmjQ-MznGSpyILVB6TIWDzJcw&s" alt="User Avatar">
+                        {% endif %}
+                        {% if i.3 %}
+                            <a class="card-action" href="https://wa.me/{{ i.4 }}" aria-label="Contact via WhatsApp">
+                                <i class="fa fa-whatsapp"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-heading">{{ i.1 }}</h3>
+                        <p class="card-text"><strong>Crop:</strong> {{ i.0 }}</p>
+                        <p class="card-text"><strong>Price:</strong> {{ i.2 }}</p>
+                        
+                        {% if not i.3 %}
+                            {% if utype == "farmer" %}
+                                <form action="/farmer/notifications/" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ i|last }}">
+                                    <button type="submit" class="card-button accept">Accept</button>
+                                </form>
+                            {% else %}
+                                <span class="card-button pending">Pending</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="card-button accepted">Accepted</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+      
+      {% endif %}
+</div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+  </body>
+</html>
