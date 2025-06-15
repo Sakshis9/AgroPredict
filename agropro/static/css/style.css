@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;900&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+.container {
+  width: 80vw;
+  margin: auto;
+  padding: 0 1vw;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.cta-btn {
+  border: 1px solid;
+  padding: 0.8rem 1.8rem;
+  border-radius: 2rem;
+  color: #552c10;
+}
+.cta-btn:hover {
+  background-color: #552c10;
+  color: #fff;
+}
+
+.hero-section {
+  height: 100vh;
+}
+.hero-section .container {
+  height: 100%;
+}
+.hero-section .container nav {
+  padding: 1.5vh 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hero-section .container nav .menu ul {
+  display: flex;
+}
+.hero-section .container nav .menu ul li {
+  margin: 0 1vw;
+}
+.hero-section .container nav .menu ul li a {
+  color: #000;
+}
+.hero-section .container nav .menu ul li a:hover {
+  color: #552c10;
+  text-decoration: underline;
+}
+.hero-section .container .hero-content {
+  height: calc(100% - 90px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.hero-section .container .hero-content h1 {
+  font-size: 20.5vw;
+  color: #552c10;
+}
+
+.hero-section .container .hero-content .choco-chips {
+  position: absolute;
+  z-index: 2; /* Higher than cookie */
+  width: 12vw;
+  top: 60%;
+  left: 35%;
+  filter: drop-shadow(0 10px 5px rgba(37, 35, 34, 0.0745098039));
+  transition: all 0.1s;
+}
+
+.hero-section .container .hero-content .cookie {
+  position: absolute;
+  width: 22vw;
+  transform: rotate(-60deg);
+  z-index: 1;
+  filter: drop-shadow(0 10px 5px rgba(37, 35, 34, 0.0745098039));
+  transition: all 0.1s;
+}
+/* .hero-section .container .hero-content .choco-chips {
+  position: absolute;
+  z-index: 0;
+  width: 12vw;
+  top: 60%;
+  left: 35%;
+  filter: drop-shadow(0 10px 5px rgba(37, 35, 34, 0.0745098039));
+  transition: all 0.1s;
+} */
+.hero-section .container .hero-content .peanut {
+  position: absolute;
+  left: 90%;
+  top: 45%;
+  transform: translate(-40%, -90%);
+  width: 12vw;
+  z-index: -1;
+  filter: drop-shadow(0 10px 5px rgba(37, 35, 34, 0.0745098039));
+}
+.hero-section .container .hero-content .gem {
+  position: absolute;
+  left: 4%;
+  top: 60%;
+  width: 3vw;
+  filter: drop-shadow(0 10px 5px rgba(37, 35, 34, 0.0745098039));
+}
+
+.second-section, .third-section {
+  height: 100vh;
+  background-color: rgba(85, 44, 16, 0.2);
+}
+.second-section .container, .third-section .container {
+  height: 100%;
+}
+.second-section .container .content-wrapper, .third-section .container .content-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.second-section .container .content-wrapper .img-section, .third-section .container .content-wrapper .img-section {
+  flex-basis: 50%;
+}
+.second-section .container .content-wrapper .content-section, .third-section .container .content-wrapper .content-section {
+  flex-basis: 50%;
+}
+.second-section .container .content-wrapper .content-section h2, .third-section .container .content-wrapper .content-section h2 {
+  font-size: 5vw;
+  line-height: 1;
+  color: #552c10;
+}
+.second-section .container .content-wrapper .content-section .sub-heading, .third-section .container .content-wrapper .content-section .sub-heading {
+  font-size: 1.5vw;
+  margin: 1vh 0 2vh;
+  color: #552c10;
+}
+.second-section .container .content-wrapper .content-section p, .third-section .container .content-wrapper .content-section p {
+  line-height: 30px;
+}
+
+.third-section {
+  background-color: #fff;
+}
+.third-section .product-card {
+  background-color: #552c10;
+  color: #fff;
+  text-align: center;
+  flex-basis: 30%;
+  height: 35vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  padding: 5vh 2vh;
+  border-radius: 30px;
+  position: relative;
+}
+.third-section .product-card h4 {
+  font-size: 2vw;
+}
+.third-section .product-card .cta-btn {
+  color: #fff;
+  margin-top: 1.5rem;
+}
+.third-section .product-card .cta-btn:hover {
+  background-color: #fff;
+  color: #552c10;
+}
+.third-section .product-card .cooki-sm {
+  width: 13vw;
+  position: absolute;
+  top: -35%;
+  filter: drop-shadow(0 10px 5px rgba(37, 35, 34, 0.0745098039));
+  transition: all 0.1s;
+}/*# sourceMappingURL=style.css.map */
