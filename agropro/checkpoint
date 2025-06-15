@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/sakshi/Downloads/AgroUltraPro-main/agropro/classifyModel2DSoil2.tflearn"
+all_model_checkpoint_paths: "/Users/sakshi/Downloads/AgroUltraPro-main/agropro/classifyModel2DSoil2.tflearn"
